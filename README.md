@@ -7,6 +7,8 @@ i generally recommend to use JAMA (http://math.nist.gov/javanumerics/jama/) for 
 
 Usage
 =====
+
+```java
 // solve system of linear equations Ax = b
 double[][] A = { 
 		{ 1, 2, 3 }, 
@@ -32,3 +34,4 @@ System.out.println("b_c:" + Mat.str(b_c));
 // invert matrix A
 double[][] Ainv = new LUD(A).inverse(); // allow A to be modified as we wont need it anymore
 System.out.println("A^-1:" + Mat.str(Ainv));
+```
