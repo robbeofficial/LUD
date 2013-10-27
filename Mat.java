@@ -1,7 +1,7 @@
 public class Mat {
 	
 	/**
-	 * static matrix helper functions
+	 * optional class with static matrix helper functions
 	 * directly operate on 2d arrays
 	 * mostly derived from http://math.nist.gov/javanumerics/jama/ 
 	 */
