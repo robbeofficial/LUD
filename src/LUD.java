@@ -2,6 +2,8 @@ public class LUD {
 	
 	/**
 	 * LU Decomposition
+	 * directly operates on 2D arrays
+	 * can be used to solve linear equation systems, invert (squared) matrices, etc.
 	 * derived from http://math.nist.gov/javanumerics/jama/
 	 * (removed dependency to the rest of the library)
 	 */
@@ -108,20 +110,9 @@ public class LUD {
 			d *= LU[j][j];
 		}
 		return d;
-	}
-
-	public static String str(double[][] M) {
-		StringBuilder sb = new StringBuilder();
-		for (int i = 0; i < M.length; i++) {
-			for (int j = 0; j < M[i].length; j++) {
-				sb.append('\t').append(M[i][j]);
-			}
-			sb.append('\n');
-		}
-		return sb.toString();
-	}
+	}	
 	
-	public static double[][] identity(int m) {
+	private double[][] identity(int m) {
 		double[][] I = new double[m][m];
 		for (int i = 0; i < m; i++) {
 			for (int j = 0; j < m; j++) {
@@ -129,51 +120,13 @@ public class LUD {
 			}
 		}
 		return I;
-	}
-	
-	
-	public static double[][] multiply(double[][] A, double[][] B) {
-		int Am = A.length, An = A[0].length;
-		int Bm = B.length, Bn = B[0].length;
-
-		if (Bm != An) {
-			throw new IllegalArgumentException("Matrix inner dimensions must agree.");
-		}
-		double[][] C = new double[Am][Bn];
-		double[] Bcolj = new double[An];
-		for (int j = 0; j < Bn; j++) {
-			for (int k = 0; k < An; k++) {
-				Bcolj[k] = B[k][j];
-			}
-			for (int i = 0; i < Am; i++) {
-				double[] Arowi = A[i];
-				double s = 0;
-				for (int k = 0; k < An; k++) {
-					s += Arowi[k] * Bcolj[k];
-				}
-				C[i][j] = s;
-			}
-		}
-		return C;
-	}	
+	}		
 	
 	public double[][] inverse() {
 		return solve(identity(m));
 	}
-	
-	// we need this, as java's clone() method does not perform a deep copy on 2d arrays
-	public static double[][] copy(double[][] A) {
-		int m = A.length, n = A[0].length; 
-		double[][] B = new double[m][n];
-		for (int i = 0; i < m; i++) {
-			for (int j = 0; j < n; j++) {
-				B[i][j] = A[i][j];
-			}
-		}
-		return B;
-	}
    
-	public double[][] submat(double[][] A, int[] r, int j0, int j1) {
+	private double[][] submat(double[][] A, int[] r, int j0, int j1) {
 		double[][] B = new double[r.length][j1 - j0 + 1];
 		for (int i = 0; i < r.length; i++) {
 			for (int j = j0; j <= j1; j++) {
